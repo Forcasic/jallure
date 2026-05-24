@@ -1,0 +1,16 @@
+services:
+  jmeter:
+    container_name: "jmeter"
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../src/test/resources/:/mnt/jmeter
+      - ../build/allure-results:/result/allure-results
+    command: >
+      jmeter -n
+      -t /mnt/jmeter/allure-jmeter-example.jmx
+      -l /result/allure-results/result.jtl
+      -j /result/allure-results/jmeter.log
+      -J_ALLURE_REPORT_PATH=/result/allure-results
+      -J_ALLURE_CONFIG_PATH=/opt/jallure.groovy

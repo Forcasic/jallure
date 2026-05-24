@@ -1,0 +1,457 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'codenarc'
+}
+
+group = 'io.github.forcasic'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    jmeterRuntime
+}
+
+dependencies {
+    // Groovy (aligned with JMeter 5.6.3 runtime)
+    implementation 'org.codehaus.groovy:groovy:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-json:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-xml:3.0.19'
+
+    // JMeter APIs (compile-only, provided by JMeter at runtime)
+    compileOnly 'org.apache.jmeter:ApacheJMeter_core:5.6.3'
+    compileOnly 'org.apache.jmeter:ApacheJMeter_components:5.6.3'
+    compileOnly 'org.apache.jmeter:ApacheJMeter_http:5.6.3'
+
+    // Apache Tika for binary content parsing
+    implementation 'org.apache.tika:tika-core:2.9.1'
+    implementation 'org.apache.tika:tika-parsers-standard-package:2.9.1'
+
+    // JMeter runtime libs (copied to build/jmeter/lib)
+    jmeterRuntime 'org.apache.tika:tika-core:2.9.1'
+    jmeterRuntime('org.apache.tika:tika-parsers-standard-package:2.9.1') {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+    }
+    jmeterRuntime 'org.postgresql:postgresql:42.7.3'
+    jmeterRuntime 'com.oracle.database.jdbc:ojdbc11:23.4.0.24.05'
+
+    // Dependencies for jmeter-plugins-json (JSONFormatter)
+    jmeterRuntime 'net.sf.json-lib:json-lib:2.4:jdk15'
+    jmeterRuntime 'commons-lang:commons-lang:2.6'
+    jmeterRuntime 'net.sf.ezmorph:ezmorph:1.0.6'
+    jmeterRuntime 'commons-beanutils:commons-beanutils:1.9.4'
+    jmeterRuntime 'commons-collections:commons-collections:3.2.2'
+
+    // Spock for testing
+    testImplementation 'org.spockframework:spock-core:2.3-groovy-3.0'
+    testImplementation 'io.qameta.allure:allure-java-commons:2.24.0'
+    testImplementation 'org.codehaus.groovy:groovy-xml:3.0.19'
+    testImplementation 'net.bytebuddy:byte-buddy:1.14.11'
+
+    // JMeter for integration test runtime
+    testImplementation 'org.apache.jmeter:ApacheJMeter_core:5.6.3'
+    testImplementation 'org.apache.jmeter:ApacheJMeter_components:5.6.3'
+    testImplementation 'org.apache.jmeter:ApacheJMeter_http:5.6.3'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+codenarc {
+    configFile = file('config/codenarc/codenarc.groovy')
+    reportFormat = 'console'
+}
+
+tasks.named('codenarcMain') {
+}
+
+tasks.named('codenarcTest') {
+    ignoreFailures = true
+}
+
+// We deliver self-contained .groovy scripts, not a JAR
+jar.enabled = false
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+    }
+}
+
+// --- Allure CLI tasks ---
+
+def allureVersion = '2.30.0'
+def allureDir = file("${buildDir}/allure/allure-${allureVersion}")
+def allureArchive = file("${buildDir}/tmp/allure-${allureVersion}.tgz")
+def allureUrl = "https://github.com/allure-framework/allure2/releases/download/${allureVersion}/allure-${allureVersion}.tgz"
+
+tasks.register('downloadAllureArchive') {
+    group = 'allure'
+    description = 'Downloads Allure command-line tool archive'
+    outputs.file allureArchive
+
+    doLast {
+        if (!allureArchive.exists()) {
+            allureArchive.parentFile.mkdirs()
+            println "Downloading Allure ${allureVersion} from ${allureUrl}..."
+            new URL(allureUrl).withInputStream { ins ->
+                allureArchive.withOutputStream { outs ->
+                    outs << ins
+                }
+            }
+            println "Downloaded to ${allureArchive}"
+        } else {
+            println "Allure archive already exists, skipping download."
+        }
+    }
+}
+
+tasks.register('extractAllure', Copy) {
+    group = 'allure'
+    description = 'Extracts Allure command-line tool archive'
+    dependsOn 'downloadAllureArchive'
+
+    from tarTree(allureArchive)
+    into "${buildDir}/allure"
+}
+
+tasks.register('allureGenerate', Exec) {
+    group = 'allure'
+    description = 'Generates Allure HTML report from build/allure-results'
+    dependsOn 'extractAllure'
+
+    def resultsDir = file("${buildDir}/allure-results")
+    def reportDir = file("${buildDir}/allure-report")
+
+    workingDir rootDir
+    commandLine 'env', '-u', 'LD_LIBRARY_PATH', '-u', 'GTK_PATH', '-u', 'GIO_MODULE_DIR',
+            "${allureDir}/bin/allure",
+            'generate', resultsDir.absolutePath,
+            '--clean',
+            '-o', reportDir.absolutePath
+
+    doFirst {
+        if (!resultsDir.exists() || resultsDir.list().length == 0) {
+            throw new GradleException("No Allure results found in ${resultsDir}. Run './gradlew jmeterRun' first.")
+        }
+        println "Generating Allure report from ${resultsDir}..."
+    }
+}
+
+tasks.register('allureOpen', Exec) {
+    group = 'allure'
+    description = 'Opens generated Allure HTML report in browser'
+    dependsOn 'allureGenerate'
+
+    workingDir rootDir
+    commandLine 'env', '-u', 'LD_LIBRARY_PATH', '-u', 'GTK_PATH', '-u', 'GIO_MODULE_DIR',
+            "${allureDir}/bin/allure",
+            'open', file("${buildDir}/allure-report").absolutePath
+}
+
+tasks.register('allureServe', Exec) {
+    group = 'allure'
+    description = 'Serves Allure report from build/allure-results via local web-server'
+    dependsOn 'extractAllure'
+
+    def resultsDir = file("${buildDir}/allure-results")
+
+    workingDir rootDir
+    commandLine 'env', '-u', 'LD_LIBRARY_PATH', '-u', 'GTK_PATH', '-u', 'GIO_MODULE_DIR',
+            "${allureDir}/bin/allure",
+            'serve', resultsDir.absolutePath
+
+    doFirst {
+        if (!resultsDir.exists() || resultsDir.list().length == 0) {
+            throw new GradleException("No Allure results found in ${resultsDir}. Run './gradlew jmeterRun' first.")
+        }
+        println "Starting Allure server for ${resultsDir}..."
+    }
+}
+
+// --- Custom JMeter tasks ---
+
+def jmeterVersion = '5.6.3'
+def jmeterDir = file("${buildDir}/jmeter/apache-jmeter-${jmeterVersion}")
+def jmeterArchive = file("${buildDir}/tmp/apache-jmeter-${jmeterVersion}.tgz")
+def jmeterUrl = "https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${jmeterVersion}.tgz"
+
+tasks.register('downloadJmeterArchive') {
+    group = 'jmeter'
+    description = 'Downloads Apache JMeter archive'
+    outputs.file jmeterArchive
+
+    doLast {
+        if (!jmeterArchive.exists()) {
+            jmeterArchive.parentFile.mkdirs()
+            println "Downloading JMeter ${jmeterVersion} from ${jmeterUrl}..."
+            new URL(jmeterUrl).withInputStream { ins ->
+                jmeterArchive.withOutputStream { outs ->
+                    outs << ins
+                }
+            }
+            println "Downloaded to ${jmeterArchive}"
+        } else {
+            println "JMeter archive already exists, skipping download."
+        }
+    }
+}
+
+tasks.register('extractJmeter', Copy) {
+    group = 'jmeter'
+    description = 'Extracts Apache JMeter archive'
+    dependsOn 'downloadJmeterArchive'
+
+    from tarTree(jmeterArchive)
+    into "${buildDir}/jmeter"
+}
+
+tasks.register('downloadYongfa365Plugin') {
+    group = 'jmeter'
+    description = 'Downloads yongfa365 JMeter plugin JAR'
+    def pluginFile = file("${buildDir}/tmp/yongfa365-jmeter-plugin.jar")
+    outputs.file pluginFile
+
+    doLast {
+        if (!pluginFile.exists()) {
+            pluginFile.parentFile.mkdirs()
+            println "Downloading yongfa365-jmeter-plugin..."
+            new URL('https://github.com/yongfa365/yongfa365-jmeter-plugins/releases/download/3.0.1/yongfa365-jmeter-plugin-3.0.1.jar').withInputStream { ins ->
+                pluginFile.withOutputStream { outs ->
+                    outs << ins
+                }
+            }
+            println "Downloaded to ${pluginFile}"
+        } else {
+            println "yongfa365 plugin already exists, skipping download."
+        }
+    }
+}
+
+tasks.register('copyJmeterLibs', Copy) {
+    group = 'jmeter'
+    description = 'Copies runtime dependencies to JMeter lib folder'
+    dependsOn 'extractJmeter'
+
+    from configurations.jmeterRuntime
+    into "${jmeterDir}/lib"
+}
+
+tasks.register('downloadJmeterPluginsJson') {
+    group = 'jmeter'
+    description = 'Downloads jmeter-plugins-json and cmn-jmeter JARs'
+    def jsonPlugin = file("${buildDir}/tmp/jmeter-plugins-json-2.7.jar")
+    def cmnPlugin = file("${buildDir}/tmp/jmeter-plugins-cmn-jmeter-0.7.jar")
+    outputs.files jsonPlugin, cmnPlugin
+
+    doLast {
+        if (!jsonPlugin.exists()) {
+            jsonPlugin.parentFile.mkdirs()
+            println "Downloading jmeter-plugins-json..."
+            new URL('https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-json/2.7/jmeter-plugins-json-2.7.jar').withInputStream { ins ->
+                jsonPlugin.withOutputStream { outs ->
+                    outs << ins
+                }
+            }
+            println "Downloaded to ${jsonPlugin}"
+        }
+        if (!cmnPlugin.exists()) {
+            println "Downloading jmeter-plugins-cmn-jmeter..."
+            new URL('https://repo1.maven.org/maven2/kg/apc/jmeter-plugins-cmn-jmeter/0.7/jmeter-plugins-cmn-jmeter-0.7.jar').withInputStream { ins ->
+                cmnPlugin.withOutputStream { outs ->
+                    outs << ins
+                }
+            }
+            println "Downloaded to ${cmnPlugin}"
+        }
+    }
+}
+
+tasks.register('copyJmeterPlugins', Copy) {
+    group = 'jmeter'
+    description = 'Copies JMeter plugin JARs to lib/ext folder'
+    dependsOn 'extractJmeter', 'downloadYongfa365Plugin', 'downloadJmeterPluginsJson'
+
+    from file("${buildDir}/tmp/yongfa365-jmeter-plugin.jar")
+    from file("${buildDir}/tmp/jmeter-plugins-json-2.7.jar")
+    from file("${buildDir}/tmp/jmeter-plugins-cmn-jmeter-0.7.jar")
+    into "${jmeterDir}/lib/ext"
+}
+
+tasks.register('assembleJallureScripts') {
+    group = 'build'
+    description = 'Assembles self-contained jallure.groovy from modular classes'
+
+    def outputDir = file('build/assembled-groovy')
+
+    doLast {
+        outputDir.mkdirs()
+        // --- jallure.groovy ---
+        def jallureParts = [
+            file('src/main/groovy/io/github/forcasic/jmeter/allure/JsonUtils.groovy'),
+            file('src/main/groovy/io/github/forcasic/jmeter/allure/JMeterContext.groovy'),
+            file('src/main/groovy/io/github/forcasic/jmeter/allure/AttachmentWriter.groovy'),
+            file('src/main/groovy/io/github/forcasic/jmeter/allure/AllureResultBuilder.groovy'),
+            file('src/main/groovy/io/github/forcasic/jmeter/allure/AllureReporter.groovy'),
+        ]
+
+        def jallureOut = file("${outputDir}/jallure.groovy")
+        jallureOut.text = '''/*
+  Author: Forcasic
+  Description: Groovy for create allure-results for JMeter (auto-assembled)
+  Date Create: 29.07.2021
+  Date Update: 23.05.2026
+  Version: 1.0.0
+*/
+version = '1.0.0'
+
+import groovy.json.JsonSlurper
+import org.apache.jmeter.util.Document
+import org.apache.jmeter.services.FileServer
+import java.nio.charset.StandardCharsets
+import java.time.LocalDateTime
+import java.util.regex.Matcher
+
+'''
+        jallureParts.each { part ->
+            jallureOut.append(part.text.replaceAll(/(?m)^package .*\n?/, ''))
+            jallureOut.append('\n\n')
+        }
+
+        jallureOut.append('''
+// Entry point
+new AllureReporter(ctx, vars, prev, sampler, log, Parameters).run()
+''')
+
+        println "Assembled jallure.groovy (${jallureOut.length()} bytes)"
+    }
+}
+
+tasks.register('copyGroovyToJmeter', Copy) {
+    group = 'jmeter'
+    description = 'Copies Allure reporter groovy scripts to JMeter extras folder'
+    dependsOn 'assembleJallureScripts', 'extractJmeter'
+
+    from('build/assembled-groovy') {
+        include 'jallure.groovy'
+    }
+    into "${jmeterDir}/extras"
+}
+
+tasks.register('copyJmeterProperties', Copy) {
+    group = 'jmeter'
+    description = 'Copies custom jmeter.properties to JMeter bin folder'
+    dependsOn 'extractJmeter'
+
+    from('src/main/resources/jmeter') {
+        include 'jmeter.properties'
+    }
+    into "${jmeterDir}/bin"
+}
+
+tasks.register('patchJmx') {
+    group = 'jmeter'
+    description = 'Patches JMX paths for local execution without modifying source'
+    def originalJmx = project.hasProperty('jmxFile') ? file(project.property('jmxFile')) : file('src/test/resources/allure-jmeter-example.jmx')
+    def patchedJmx = file("${buildDir}/tmp/patched-${originalJmx.name}")
+    inputs.file originalJmx
+    outputs.file patchedJmx
+
+    doLast {
+        ant.copy(file: originalJmx, tofile: patchedJmx, overwrite: true)
+        ant.replace(file: patchedJmx, token: '/result/allure-results', value: file("${buildDir}/allure-results").absolutePath)
+        ant.replace(file: patchedJmx, token: '/opt/jallure.groovy', value: file('build/assembled-groovy/jallure.groovy').absolutePath)
+        ant.replace(file: patchedJmx, token: 'log.warn(vars.getObject(&quot;allure.clearLabels&quot;))', value: '')
+        ant.replace(file: patchedJmx, token: 'log.warn(vars.getObject("allure.clearLabels"))', value: '')
+        println "Patched JMX written to: ${patchedJmx}"
+    }
+}
+
+tasks.register('jmeterRun', Exec) {
+    group = 'jmeter'
+    description = 'Runs JMeter test plan with Allure reporter (non-GUI)'
+    dependsOn 'copyJmeterLibs', 'copyJmeterPlugins', 'copyGroovyToJmeter', 'copyJmeterProperties', 'patchJmx'
+
+    def resultsDir = file("${buildDir}/allure-results")
+    def originalJmx = project.hasProperty('jmxFile') ? file(project.property('jmxFile')) : file('src/test/resources/allure-jmeter-example.jmx')
+    def jmxFile = file("${buildDir}/tmp/patched-${originalJmx.name}")
+
+    resultsDir.deleteDir()
+    resultsDir.mkdirs()
+
+    workingDir rootDir
+    commandLine "${jmeterDir}/bin/jmeter",
+            '-n',
+            '-t', jmxFile.absolutePath,
+            '-l', "${buildDir}/jmeter-run-results.jtl",
+            '-j', "${buildDir}/jmeter-run.log",
+            '-J_ALLURE_REPORT_PATH=' + resultsDir.absolutePath,
+            '-J_ALLURE_CONFIG_PATH=' + file("build/assembled-groovy/jallure.groovy").absolutePath
+
+    doFirst {
+        println "Running JMeter with test plan: ${jmxFile}"
+        println "Allure results will be written to: ${resultsDir}"
+    }
+}
+
+tasks.register('jmeterGui', Exec) {
+    group = 'jmeter'
+    description = 'Opens JMeter GUI with the example test plan'
+    dependsOn 'copyJmeterLibs', 'copyJmeterPlugins', 'copyGroovyToJmeter', 'copyJmeterProperties', 'patchJmx'
+
+    def resultsDir = file("${buildDir}/allure-results")
+    def originalJmx = project.hasProperty('jmxFile') ? file(project.property('jmxFile')) : file('src/test/resources/allure-jmeter-example.jmx')
+    def jmxFile = file("${buildDir}/tmp/patched-${originalJmx.name}")
+
+    resultsDir.mkdirs()
+
+    workingDir rootDir
+    commandLine "${jmeterDir}/bin/jmeter",
+            '-t', jmxFile.absolutePath,
+            '-J_ALLURE_REPORT_PATH=' + resultsDir.absolutePath,
+            '-J_ALLURE_CONFIG_PATH=' + file("build/assembled-groovy/jallure.groovy").absolutePath
+
+    doFirst {
+        println "Starting JMeter GUI with test plan: ${jmxFile}"
+        println "Allure results will be written to: ${resultsDir}"
+    }
+}
+
+tasks.register('validateAllureResults', JavaExec) {
+    group = 'jmeter'
+    description = 'Validates generated Allure results against expected state'
+    dependsOn 'jmeterRun'
+
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'io.github.forcasic.jmeter.allure.AllureResultValidator'
+
+    args = [
+        file("${buildDir}/allure-results").absolutePath,
+        file("src/test/resources/expected_results.json").absolutePath
+    ]
+
+    doFirst {
+        println "Validating Allure results..."
+    }
+}
+
+tasks.register('integrationTest') {
+    group = 'verification'
+    description = 'Runs JMeter integration tests and validates Allure results'
+    dependsOn 'validateAllureResults'
+}
+
+tasks.register('cleanAllure', Delete) {
+    group = 'jmeter'
+    description = 'Deletes generated Allure results and reports'
+    delete "${buildDir}/allure-results"
+    delete "${buildDir}/allure-report"
+}
+

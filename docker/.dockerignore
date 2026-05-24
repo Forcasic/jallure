@@ -1,0 +1,16 @@
+build/
+.gradle/
+
+# Keep assembled groovy scripts for Docker
+!build/assembled-groovy/
+!build/assembled-groovy/**
+.git/
+*.log
+*.jtl
+allure-results/
+allure-report/
+allureReport/
+.DS_Store
+Thumbs.db
+.idea/
+*.iml

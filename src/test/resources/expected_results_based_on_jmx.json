@@ -1,0 +1,533 @@
+{
+  "_comment": "Expected Allure results generated from pure JMX analysis (no execution). Review logic vs real runtime behavior.",
+  "total_tests": 33,
+  "expected_tests": [
+    {
+      "name": "Bug T1",
+      "fullName": "org.jmeter.com.epic1.feature1.story1.bug_t1",
+      "epic": "Epic1",
+      "feature": "Feature1",
+      "story": "Story1",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {"name_pattern": "T1 step 1 (start)", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "T1 step 2 (continue)", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Bug T2",
+      "fullName": "org.jmeter.com.epic2.feature2.story2.bug_t2",
+      "epic": "Epic2",
+      "feature": "Feature2",
+      "story": "Story2",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {"name_pattern": "T2 step 1 (start)", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "T2 step 2 (continue)", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "T2 step 3 (stop)", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Check capsules (with skipped params)",
+      "fullName": "org.jmeter.com.null.spacex-capsules.positive.check_capsules_(with_skipped_params)",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "status": "skipped",
+      "mode": "multi",
+      "main_steps": 4,
+      "labels": {"tag": "regress", "issues": "APP-1000,APP-1001"},
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation.get_capsule_with_serial:_space",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 3,
+      "labels": {"issues": "APP-1000,APP-1001"},
+      "note": "No allure.name set → final test name equals last sampler name. Solo-like comment in JMX is misleading; it uses start/continue/stop.",
+      "steps": [
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Check some capsules in DB before critical",
+      "fullName": "org.jmeter.com.null.spacex-capsules.positive.check_some_capsules_in_db_before_critical",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "note": "parameters contain 'tags=[db,space-x]' but these are NOT parsed into labels because they are not allure.label.tags vars.",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Check capsule's id in db", "sub_steps": 1, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space. With ignore_links",
+      "fullName": "org.jmeter.com.null.spacex-capsules.links_ignore_parameter_in_one_of_solostep_test._with_multiple_links.get_capsule_with_serial:_space._with_ignore_links",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Links ignore parameter in one of solostep test. With multiple links",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 3,
+      "labels": {"owner": "None Alex", "tags": "example_tag_1,example_tag_2"},
+      "links": [],
+      "note": "links are ignored via ignore_links modifier on start and stop steps.",
+      "steps": [
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space. With ignore_tags",
+      "fullName": "org.jmeter.com.null.spacex-capsules.tags_ignore_parameter_in_one_of_solostep_test._with_multuple_tags.get_capsule_with_serial:_space._with_ignore_tags",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Tags ignore parameter in one of solostep test. With multuple tags",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 3,
+      "labels": {},
+      "note": "allure.label.tags='critical,smoke' is set but ignored via ignore_tags modifier on all steps.",
+      "steps": [
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "With description and owner v2",
+      "fullName": "org.jmeter.com.null.spacex-capsules.error.with_description_and_owner_v2",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "labels": {"owner": "None Alex", "tag": "smoke"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/6"}, {"name": "docsLink", "url": "https://github.com/forcasic/jallure/blob/master/README.md"}, {"name": "myLink", "url": "https://github.com/forcasic"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 1, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "RandomString Capsule name",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation_-_parameterized.randomstring_capsule_name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {},
+      "parameters": {"case": ["capsule_name", "test_name"], "step": ["error_message_expected"]},
+      "steps": [
+        {"name_pattern": "RandomString Capsule name", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "RandomString more then 256 Capsule name",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation_-_parameterized.randomstring_more_then_256_capsule_name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {"tags": "smoke,api,critical"},
+      "parameters": {"case": ["capsule_name", "test_name"], "step": ["error_message_expected"]},
+      "steps": [
+        {"name_pattern": "RandomString more then 256 Cap", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "RandomNumber name",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation_-_parameterized.randomnumber_name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {"tags": "smoke"},
+      "parameters": {"case": ["capsule_name", "test_name"], "step": ["error_message_expected"]},
+      "steps": [
+        {"name_pattern": "RandomNumber name", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Nullable name",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation_-_parameterized.nullable_name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {},
+      "parameters": {"case": ["capsule_name", "test_name"], "step": ["error_message_expected"]},
+      "steps": [
+        {"name_pattern": "Nullable name", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Try Inject",
+      "fullName": "org.jmeter.com.null.spacex-capsules.validation_-_parameterized.try_inject",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {"tags": "sql_inject"},
+      "parameters": {"case": ["capsule_name", "test_name"], "step": ["error_message_expected"]},
+      "steps": [
+        {"name_pattern": "Try Inject", "sub_steps": 2, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "With description and owner. Multiple tags and multiple links",
+      "fullName": "org.jmeter.com.null.spacex-capsules.error.with_description_and_owner._multiple_tags_and_multiple_links",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "labels": {"owner": "None Alex", "tags": "smoke,api,jmeter,test"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/6"}, {"name": "myLink", "url": "https://github.com/forcasic"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 1, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "With epic and description and owner",
+      "fullName": "org.jmeter.com.capsules.spacex-capsules.error.with_epic_and_description_and_owner",
+      "epic": "Capsules",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "labels": {"owner": "None Alex"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/6"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 1, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "With epic and description and owner",
+      "fullName": "org.jmeter.com.capsules_without_story.spacex-capsules.null.with_epic_and_description_and_owner",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "labels": {"owner": "None Alex"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/6"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 1, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Folder with checking param types n1",
+      "fullName": "org.jmeter.com.capsules_without_story.spacex-capsules.null.folder_with_checking_param_types_n1",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {"owner": "Tester"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/61"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Folder with checking param types n2",
+      "fullName": "org.jmeter.com.capsules_without_story.spacex-capsules.null.folder_with_checking_param_types_n2",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "labels": {"owner": "Tester"},
+      "links": [{"name": "issue", "url": "https://github.com/forcasic/jallure/issues/61"}],
+      "description": "Lorem Ipsum is simply dummy text...",
+      "steps": [
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "With JSR223 Sampler step",
+      "fullName": "org.jmeter.com.null.spacex-capsules.error.with_jsr223_sampler_step",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 5,
+      "labels": {"severity": "critical"},
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get locale in JSR223 Sampler", "sub_steps": 1, "has_attachments": true, "note": "JSR223Sampler fails but assertion expects 'failed' in response_message → sub-step passes"},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 3, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 1, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Check capsules",
+      "fullName": "org.jmeter.com.null.spacex-capsules.positive.check_capsules",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "note": "One step uses 'critical' modifier; if that step fails the thread stops before DB-after-critical test. Assumes API responses match assertions.",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Get capsule with serial", "sub_steps": 4, "has_attachments": true},
+        {"name_pattern": "Get upcoming capsules", "sub_steps": 2, "has_attachments": true},
+        {"name_pattern": "Get past capsules", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Check some capsules in DB after critical",
+      "fullName": "org.jmeter.com.null.spacex-capsules.positive.check_some_capsules_in_db_after_critical",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "note": "Present in JMX as enabled, but may be skipped at runtime if previous critical step stops the thread.",
+      "steps": [
+        {"name_pattern": "Get all capsules", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Check capsule's id in db", "sub_steps": 1, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Double start case A",
+      "fullName": "org.jmeter.com.edge_cases.auto-finalization.double_start.double_start_case_a",
+      "epic": "Edge cases",
+      "feature": "Auto-finalization",
+      "story": "Double start",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "note": "Auto-finalized when next start is encountered. Only 1 step (Step 1 start).",
+      "steps": [
+        {"name_pattern": "Step 1 start", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Double start case A",
+      "fullName": "org.jmeter.com.edge_cases.auto-finalization.double_start.double_start_case_a",
+      "epic": "Edge cases",
+      "feature": "Auto-finalization",
+      "story": "Double start",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "note": "Case B: Step 2 start (auto-finalizes A) + Step 3 stop. Same allure.name restored after clearAllureState.",
+      "steps": [
+        {"name_pattern": "Step 2 start (auto-finalizes A", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 3 stop (finalizes B)", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Step 4 orphaned stop",
+      "fullName": "org.jmeter.com.null.null.null.step_4_orphaned_stop",
+      "epic": "",
+      "feature": "",
+      "story": "",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "note": "Orphaned stop with no active case. Labels were cleared by previous start's clearAllureState.",
+      "steps": [
+        {"name_pattern": "Step 4 orphaned stop", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Orphaned case",
+      "fullName": "org.jmeter.com.edge_cases.teardown.missing_stop.orphaned_case",
+      "epic": "Edge cases",
+      "feature": "Teardown",
+      "story": "Missing stop",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "note": "No stop call; result JSON is left with accumulated steps (start + continue).",
+      "steps": [
+        {"name_pattern": "Step 1 start", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 2 continue", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Explicit start stop",
+      "fullName": "org.jmeter.com.edge_cases.explicit_mode.start_and_stop.explicit_start_stop",
+      "epic": "Edge cases",
+      "feature": "Explicit mode",
+      "story": "Start and stop",
+      "status": "passed",
+      "mode": "solo",
+      "main_steps": 1,
+      "note": "start,stop on a single step → full lifecycle in one call.",
+      "steps": [
+        {"name_pattern": "Step 1 start,stop", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Explicit start stop skipped",
+      "fullName": "org.jmeter.com.edge_cases.explicit_mode.skipped_status.explicit_start_stop_skipped",
+      "epic": "Edge cases",
+      "feature": "Explicit mode",
+      "story": "Skipped status",
+      "status": "skipped",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {"name_pattern": "Step 1 start,stop skipped", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Long continue chain",
+      "fullName": "org.jmeter.com.edge_cases.chain.five_steps.long_continue_chain",
+      "epic": "Edge cases",
+      "feature": "Chain",
+      "story": "Five steps",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 5,
+      "steps": [
+        {"name_pattern": "Step 1 start", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 2 continue", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 3 continue", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 4 continue", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Step 5 stop", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Critical modifier",
+      "fullName": "org.jmeter.com.edge_cases.modifiers.critical_stop_thread.critical_modifier",
+      "epic": "Edge cases",
+      "feature": "Modifiers",
+      "story": "Critical stop thread",
+      "status": "failed",
+      "mode": "solo",
+      "main_steps": 1,
+      "note": "Request returns 404 but assertion expects 200 → step fails. critical modifier sets stopThread=true.",
+      "steps": [
+        {"name_pattern": "Failing request", "sub_steps": 1, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Module Controller start module stop",
+      "fullName": "org.jmeter.com.module_controller.start-module-stop.basic.module_controller_start_module_stop",
+      "epic": "Module Controller",
+      "feature": "start-module-stop",
+      "story": "Basic",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 5,
+      "steps": [
+        {"name_pattern": "Case start", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 1", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 2", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 3", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Case stop", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Module Controller wrapper without start",
+      "fullName": "org.jmeter.com.module_controller.wrapper-no-start.continue_as_start.module_controller_wrapper_without_start",
+      "epic": "Module Controller",
+      "feature": "wrapper-no-start",
+      "story": "continue_as_start",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 3,
+      "note": "Orphaned case built from 3 continues called via ModuleController. No start/stop in wrapper.",
+      "steps": [
+        {"name_pattern": "Fragment step 1", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 2", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 3", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Module Controller start module start auto-finalize",
+      "fullName": "org.jmeter.com.module_controller.start-module-start.auto-finalize.module_controller_start_module_start_auto-finalize",
+      "epic": "Module Controller",
+      "feature": "start-module-start",
+      "story": "Auto-finalize",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 4,
+      "note": "Case A: start A → module fragment (3 continues) → auto-finalized by start B.",
+      "steps": [
+        {"name_pattern": "Case start A", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 1", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 2", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Fragment step 3", "sub_steps": 0, "has_attachments": true}
+      ]
+    },
+    {
+      "name": "Module Controller start module start auto-finalize",
+      "fullName": "org.jmeter.com.module_controller.start-module-start.auto-finalize.module_controller_start_module_start_auto-finalize",
+      "epic": "Module Controller",
+      "feature": "start-module-start",
+      "story": "Auto-finalize",
+      "status": "passed",
+      "mode": "multi",
+      "main_steps": 2,
+      "note": "Case B: start B → stop B. Same allure.name as case A (restored after clearAllureState).",
+      "steps": [
+        {"name_pattern": "Case start B", "sub_steps": 0, "has_attachments": true},
+        {"name_pattern": "Case stop B", "sub_steps": 0, "has_attachments": true}
+      ]
+    }
+  ]
+}

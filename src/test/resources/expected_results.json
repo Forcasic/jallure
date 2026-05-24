@@ -1,0 +1,730 @@
+{
+  "_comment": "Auto-generated",
+  "total_tests": 32,
+  "expected_tests": [
+    {
+      "name": "Bug T2",
+      "epic": "Epic2",
+      "feature": "Feature2",
+      "story": "Story2",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {
+          "name_pattern": "T2 step 1 (start)",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "T2 step 2 (continue)",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "T2 step 3 (stop)",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "With epic and description and owner",
+      "epic": "Capsules",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Module Controller start module start auto-finalize",
+      "epic": "Module Controller",
+      "feature": "start-module-start",
+      "story": "Auto-finalize",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {
+          "name_pattern": "Case start B",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Case stop B",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Explicit start stop skipped",
+      "epic": "Edge cases",
+      "feature": "Explicit mode",
+      "story": "Skipped status",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Step 1 start,stop skipped",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ],
+      "status": "skipped"
+    },
+    {
+      "name": "Module Controller wrapper without start",
+      "epic": "Module Controller",
+      "feature": "wrapper-no-start",
+      "story": "continue_as_start",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {
+          "name_pattern": "Fragment step 1",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 2",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 3",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "With epic and description and owner",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "With description and owner. Multiple tags and multiple links",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Module Controller start module stop",
+      "epic": "Module Controller",
+      "feature": "start-module-stop",
+      "story": "Basic",
+      "mode": "multi",
+      "main_steps": 5,
+      "steps": [
+        {
+          "name_pattern": "Case start",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 1",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 2",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 3",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Case stop",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space. With ignore_tags",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Tags ignore parameter in one of solostep test. With multuple tags",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Step 4 orphaned stop",
+      "epic": "",
+      "feature": "",
+      "story": "",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Step 4 orphaned stop",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ],
+      "start_must_be_zero": true
+    },
+    {
+      "name": "Critical modifier",
+      "epic": "Edge cases",
+      "feature": "Modifiers",
+      "story": "Critical stop thread",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Failing request",
+          "sub_steps": 1,
+          "has_attachments": true
+        }
+      ],
+      "status": "failed"
+    },
+    {
+      "name": "Folder with checking param types n1",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Bug T1",
+      "epic": "Epic1",
+      "feature": "Feature1",
+      "story": "Story1",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {
+          "name_pattern": "T1 step 1 (start)",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "T1 step 2 (continue)",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Check capsules (with skipped params)",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Long continue chain",
+      "epic": "Edge cases",
+      "feature": "Chain",
+      "story": "Five steps",
+      "mode": "multi",
+      "main_steps": 5,
+      "steps": [
+        {
+          "name_pattern": "Step 1 start",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 2 continue",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 3 continue",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 4 continue",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 5 stop",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "RandomNumber name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "RandomNumber name",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Check capsules",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "With description and owner v2",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Nullable name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Nullable name",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space. With ignore_links",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Links ignore parameter in one of solostep test. With multiple links",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Explicit start stop",
+      "epic": "Edge cases",
+      "feature": "Explicit mode",
+      "story": "Start and stop",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Step 1 start,stop",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Double start case A",
+      "epic": "Edge cases",
+      "feature": "Auto-finalization",
+      "story": "Double start",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Step 1 start",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "name": "With JSR223 Sampler step",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Error",
+      "mode": "multi",
+      "main_steps": 5,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get locale in JSR223 Sampler",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 3,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get upcoming capsules",
+          "sub_steps": 1,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get past capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Folder with checking param types n2",
+      "epic": "Capsules without story",
+      "feature": "SpaceX-Capsules",
+      "story": "",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 4,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Orphaned case",
+      "epic": "Edge cases",
+      "feature": "Teardown",
+      "story": "Missing stop",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {
+          "name_pattern": "Step 1 start",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 2 continue",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Check some capsules in DB before critical",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Positive",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {
+          "name_pattern": "Get all capsules",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Check capsule's id in db",
+          "sub_steps": 1,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Try Inject",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "Try Inject",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Module Controller start module start auto-finalize",
+      "epic": "Module Controller",
+      "feature": "start-module-start",
+      "story": "Auto-finalize",
+      "mode": "multi",
+      "main_steps": 4,
+      "steps": [
+        {
+          "name_pattern": "Case start A",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 1",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 2",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Fragment step 3",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Get capsule with serial: space",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation",
+      "mode": "multi",
+      "main_steps": 3,
+      "steps": [
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Get capsule with serial",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "Double start case A",
+      "epic": "Edge cases",
+      "feature": "Auto-finalization",
+      "story": "Double start",
+      "mode": "multi",
+      "main_steps": 2,
+      "steps": [
+        {
+          "name_pattern": "Step 2 start (auto-finalizes A",
+          "sub_steps": 0,
+          "has_attachments": true
+        },
+        {
+          "name_pattern": "Step 3 stop (finalizes B)",
+          "sub_steps": 0,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "RandomString Capsule name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "RandomString Capsule name",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    },
+    {
+      "name": "RandomString more then 256 Capsule name",
+      "epic": "",
+      "feature": "SpaceX-Capsules",
+      "story": "Validation - parameterized",
+      "mode": "solo",
+      "main_steps": 1,
+      "steps": [
+        {
+          "name_pattern": "RandomString more then 256 Cap",
+          "sub_steps": 2,
+          "has_attachments": true
+        }
+      ]
+    }
+  ]
+}
