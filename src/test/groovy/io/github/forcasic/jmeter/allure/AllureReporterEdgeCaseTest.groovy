@@ -5,6 +5,8 @@ import org.apache.jmeter.samplers.SampleResult
 import org.apache.jmeter.samplers.Sampler
 import org.apache.jmeter.assertions.AssertionResult
 import org.apache.jmeter.threads.JMeterContext as ApacheJMeterContext
+import org.apache.jmeter.protocol.http.sampler.HTTPSampleResult
+import org.apache.jmeter.protocol.http.sampler.HTTPSamplerProxy
 import org.slf4j.Logger
 import spock.lang.Specification
 import spock.lang.TempDir
@@ -214,5 +216,80 @@ class AllureReporterEdgeCaseTest extends Specification {
         // Labels explicitly set for the new case must survive
         vars.get('allure.label.feature') == 'New feature'
         vars.get('allure.label.story') == 'New story'
+    }
+
+    // ------------------------------------------------------------------
+    // Test 7: GET request without Content-Type must still show headers.
+    // Regression for the case when a DB call starts the case and a later
+    // GET sampler finalizes it with `stop`.
+    // ------------------------------------------------------------------
+    def "GET request without Content-Type includes request headers in attachment"() {
+        given:
+        def httpPrev = new HTTPSampleResult()
+        httpPrev.sampleStart()
+        httpPrev.setURL(new URL('http://example.com/test/test'))
+        httpPrev.setHTTPMethod('GET')
+        httpPrev.setRequestHeaders('Accept: application/json\nAuthorization: Bearer secret\nX-Api-Token: abc')
+        httpPrev.setResponseData('OK'.bytes)
+        httpPrev.setResponseCode('200')
+        httpPrev.sampleEnd()
+
+        def httpSampler = new HTTPSamplerProxy()
+        httpSampler.setDomain('example.com')
+        httpSampler.setPath('/test/test')
+        httpSampler.setMethod('GET')
+
+        vars.put('allure.name', 'GET after DB start')
+        vars.put('prevMainSteps', '')
+        vars.put('caseTimeStart', '1000')
+
+        when:
+        def reporter = new AllureReporter(ctx, vars, httpPrev, httpSampler, log, 'stop')
+        reporter.writer = mockWriter
+        reporter.run()
+
+        then:
+        1 * mockWriter.writeRequestAttachment(_, { String data ->
+            data.contains('Authorization: XXX (Has been replaced for safety)') &&
+                    data.contains('X-Api-Token: XXX (Has been replaced for safety)') &&
+                    data.contains('GET:')
+        }, _)
+    }
+
+    // ------------------------------------------------------------------
+    // Test 8: POST request with raw JSON body must include the body.
+    // ------------------------------------------------------------------
+    def "POST request with raw JSON body includes body in attachment"() {
+        given:
+        def httpPrev = new HTTPSampleResult()
+        httpPrev.sampleStart()
+        httpPrev.setURL(new URL('http://example.com/api/users'))
+        httpPrev.setHTTPMethod('POST')
+        httpPrev.setRequestHeaders('Content-Type: application/json')
+        httpPrev.setResponseData('{"id":1}'.bytes)
+        httpPrev.setResponseCode('201')
+        httpPrev.sampleEnd()
+
+        def httpSampler = new HTTPSamplerProxy()
+        httpSampler.setDomain('example.com')
+        httpSampler.setPath('/api/users')
+        httpSampler.setMethod('POST')
+        httpSampler.setPostBodyRaw(true)
+        httpSampler.addNonEncodedArgument('', '{"name":"john"}', '')
+
+        vars.put('allure.name', 'POST with raw body')
+        vars.put('prevMainSteps', '')
+        vars.put('caseTimeStart', '2000')
+
+        when:
+        def reporter = new AllureReporter(ctx, vars, httpPrev, httpSampler, log, 'stop')
+        reporter.writer = mockWriter
+        reporter.run()
+
+        then:
+        1 * mockWriter.writeRequestAttachment(_, { String data ->
+            data.contains('POST:') &&
+                    data.contains('"name":"john"')
+        }, _)
     }
 }

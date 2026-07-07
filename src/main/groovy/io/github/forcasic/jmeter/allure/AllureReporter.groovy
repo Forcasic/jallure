@@ -157,19 +157,51 @@ class AllureReporter {
     // Request / Response data & content types
     // ------------------------------------------------------------------
     void resolveRequestResponseData() {
-        boolean hasRequestContentType = !jm.prev.getRequestHeaders().findAll("[cC]ontent-[tT]ype:?(.*)").toString().contains('[]')
         boolean isHttp = jm.sampler.getClass().getName().contains('HTTPSampler')
 
-        if (hasRequestContentType && isHttp) {
-            requestData = jm.sampler.getUrl().toString() + '\n\n' +
-                    jm.prev.getRequestHeaders().replaceAll(/[aA]uthorization:.*/, "Authorization: XXX (Has been replaced for safety)").
-                            replaceAll(/[xX]-[aA]pi-[tT]oken:.*/, "X-Api-Token: XXX (Has been replaced for safety)") + '\n' +
-                    jm.prev.getHTTPMethod() + ":" + '\n' + jm.prev.getQueryString()
+        if (isHttp) {
+            String headers = jm.prev.getRequestHeaders().replaceAll(/[aA]uthorization:.*/, "Authorization: XXX (Has been replaced for safety)").
+                    replaceAll(/[xX]-[aA]pi-[tT]oken:.*/, "X-Api-Token: XXX (Has been replaced for safety)")
+            String method = jm.prev.getHTTPMethod()
+            String queryString = jm.prev.getQueryString() ?: ''
+            String body = extractHttpRequestBody()
+
+            requestData = jm.sampler.getUrl().toString() + '\n\n' + headers + '\n' + method + ':' + '\n' + queryString
+            if (!body.isEmpty()) {
+                requestData += '\n\n' + body
+            }
         } else {
             requestData = jm.prev.getSamplerData()
         }
 
         responseData = jm.prev.getResponseDataAsString()
+    }
+
+    String extractHttpRequestBody() {
+        try {
+            if (jm.sampler.respondsTo('getPostBodyRaw') && jm.sampler.getPostBodyRaw()) {
+                def arguments = jm.sampler.getArguments()
+                if (arguments != null && arguments.getArgumentCount() > 0) {
+                    String rawBody = arguments.getArgument(0).getValue()
+                    if (rawBody != null && !rawBody.isEmpty()) {
+                        return rawBody
+                    }
+                }
+            }
+        } catch (Exception ignored) {
+            // fall through
+        }
+
+        try {
+            String queryString = jm.sampler.getQueryString()
+            if (queryString != null && !queryString.isEmpty()) {
+                return queryString
+            }
+        } catch (Exception ignored) {
+            // fall through
+        }
+
+        return ''
     }
 
     void resolveContentTypes() {
