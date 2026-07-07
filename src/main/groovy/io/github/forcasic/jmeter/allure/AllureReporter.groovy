@@ -192,15 +192,6 @@ class AllureReporter {
             // fall through
         }
 
-        try {
-            String queryString = jm.sampler.getQueryString()
-            if (queryString != null && !queryString.isEmpty()) {
-                return queryString
-            }
-        } catch (Exception ignored) {
-            // fall through
-        }
-
         return ''
     }
 

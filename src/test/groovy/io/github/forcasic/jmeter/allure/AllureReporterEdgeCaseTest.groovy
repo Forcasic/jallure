@@ -292,4 +292,48 @@ class AllureReporterEdgeCaseTest extends Specification {
                     data.contains('"name":"john"')
         }, _)
     }
+
+    // ------------------------------------------------------------------
+    // Test 9: POST request with form-urlencoded body must not duplicate
+    // the body. Regression for non-raw POST bodies where queryString and
+    // the extracted body are the same value.
+    // ------------------------------------------------------------------
+    def "POST request with form-urlencoded body does not duplicate body in attachment"() {
+        given:
+        def httpPrev = new HTTPSampleResult()
+        httpPrev.sampleStart()
+        httpPrev.setURL(new URL('https://api-korona-uz-test.dp.korona.net/uzb-loans/requests'))
+        httpPrev.setHTTPMethod('POST')
+        httpPrev.setRequestHeaders('Content-Type: application/x-www-form-urlencoded')
+        String formBody = 'deviceParameters=%7B%22latitude%22%3A56.484645%2C+%22longitude%22%3A84.947649%2C+%22diagonal%22%3A1000%7D&preliminaryLoanTermsId=9ace14c8-c196-4b39-b005-df43ae360e2a'
+        httpPrev.setQueryString(formBody)
+        httpPrev.setResponseData('{"ok":true}'.bytes)
+        httpPrev.setResponseCode('200')
+        httpPrev.sampleEnd()
+
+        def httpSampler = new HTTPSamplerProxy()
+        httpSampler.setDomain('api-korona-uz-test.dp.korona.net')
+        httpSampler.setPath('/uzb-loans/requests')
+        httpSampler.setMethod('POST')
+        httpSampler.setPostBodyRaw(false)
+        httpSampler.addArgument('deviceParameters', '{"latitude":56.484645, "longitude":84.947649, "diagonal":1000}')
+        httpSampler.addArgument('preliminaryLoanTermsId', '9ace14c8-c196-4b39-b005-df43ae360e2a')
+
+        vars.put('allure.name', 'POST form-urlencoded body')
+        vars.put('prevMainSteps', '')
+        vars.put('caseTimeStart', '3000')
+
+        when:
+        def reporter = new AllureReporter(ctx, vars, httpPrev, httpSampler, log, 'stop')
+        reporter.writer = mockWriter
+        reporter.run()
+
+        then:
+        1 * mockWriter.writeRequestAttachment(_, { String data ->
+            data.contains('POST:') &&
+                    data.contains('deviceParameters=') &&
+                    data.contains('preliminaryLoanTermsId=9ace14c8-c196-4b39-b005-df43ae360e2a') &&
+                    data.count('preliminaryLoanTermsId=9ace14c8-c196-4b39-b005-df43ae360e2a') == 1
+        }, _)
+    }
 }
