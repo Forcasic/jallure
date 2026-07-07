@@ -26,7 +26,7 @@ class AllureReporter {
 
     JMeterContext jm
     AttachmentWriter writer
-    String version = '1.0.0'
+    String version = '1.0.1'
 
     // Internal state (previously script-level variables)
     String allureDisplayName = ''

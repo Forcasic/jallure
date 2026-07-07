@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'io.github.forcasic'
-version = '1.0.0'
+version = '1.0.1'
 
 repositories {
     mavenCentral()
@@ -308,9 +308,9 @@ tasks.register('assembleJallureScripts') {
   Description: Groovy for create allure-results for JMeter (auto-assembled)
   Date Create: 29.07.2021
   Date Update: 23.05.2026
-  Version: 1.0.0
+  Version: 1.0.1
 */
-version = '1.0.0'
+version = '1.0.1'
 
 import groovy.json.JsonSlurper
 import org.apache.jmeter.util.Document
