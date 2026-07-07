@@ -336,4 +336,31 @@ class AllureReporterEdgeCaseTest extends Specification {
                     data.count('preliminaryLoanTermsId=9ace14c8-c196-4b39-b005-df43ae360e2a') == 1
         }, _)
     }
+
+    // ------------------------------------------------------------------
+    // Test 10: feature suffix must be applied after start clears state
+    // Regression for orphaned starts where restoreAnnotations would
+    // overwrite the suffixed feature with the base value.
+    // ------------------------------------------------------------------
+    def "feature suffix is preserved on effective start after state reset"() {
+        given:
+        vars.put('allure.name', 'Case with suffix')
+        vars.put('allure.label.epic', 'Epic')
+        vars.put('allure.label.feature', 'Base feature')
+        vars.put('allure.feature.suffix', ' Loop1')
+
+        def step1Prev = new SampleResult()
+        step1Prev.setStartTime(1000)
+        step1Prev.setEndTime(1005)
+        def step1Sampler = Mock(Sampler)
+        step1Sampler.getName() >> 'Step 1'
+
+        when:
+        def reporter = new AllureReporter(ctx, vars, step1Prev, step1Sampler, log, 'start')
+        reporter.writer = mockWriter
+        reporter.run()
+
+        then:
+        vars.get('allure.label.feature') == 'Base feature Loop1'
+    }
 }

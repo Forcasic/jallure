@@ -75,10 +75,10 @@ class AllureReporter {
         }
 
         init()
-        handleFeatureSuffix()
         resolveRequestResponseData()
         resolveContentTypes()
         resolveModeAndUUID(preservedAnnotations)
+        handleFeatureSuffix()
         handleTika()
 
         // Set case start timestamp for new cases
