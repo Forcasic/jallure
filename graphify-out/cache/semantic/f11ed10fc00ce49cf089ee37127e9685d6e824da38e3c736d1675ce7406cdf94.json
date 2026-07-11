@@ -1,0 +1,1 @@
+{"nodes": [{"id": "allure_jmetercontext", "label": "JMeterContext.groovy", "file_type": "code", "source_file": "src/main/groovy/io/github/forcasic/jmeter/allure/JMeterContext.groovy", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Wrapper around the JMeter binding."}], "edges": [], "hyperedges": []}

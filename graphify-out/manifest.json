@@ -1,0 +1,112 @@
+{
+  "/home/hodos/projections/jallure/build.gradle": {
+    "mtime": 1783435015.673326,
+    "ast_hash": "567f0ff731a9574e88a5d7e0c1ecb6d1",
+    "semantic_hash": "567f0ff731a9574e88a5d7e0c1ecb6d1"
+  },
+  "/home/hodos/projections/jallure/config/codenarc/codenarc.groovy": {
+    "mtime": 1783415853.4890327,
+    "ast_hash": "a02ff56af0754c115c69eb35d6f12a8a",
+    "semantic_hash": "a02ff56af0754c115c69eb35d6f12a8a"
+  },
+  "/home/hodos/projections/jallure/gradlew": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "1db6d150e9a9442ca929c1fa8b2fd25e",
+    "semantic_hash": "1db6d150e9a9442ca929c1fa8b2fd25e"
+  },
+  "/home/hodos/projections/jallure/settings.gradle": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "b8f7cbcdc96b2b9e4cce15d1533527b4",
+    "semantic_hash": "b8f7cbcdc96b2b9e4cce15d1533527b4"
+  },
+  "/home/hodos/projections/jallure/src/main/groovy/io/github/forcasic/jmeter/allure/AllureReporter.groovy": {
+    "mtime": 1783451284.8210514,
+    "ast_hash": "1c9d58c8915f5cf7cb71def415f19e0d",
+    "semantic_hash": "1c9d58c8915f5cf7cb71def415f19e0d"
+  },
+  "/home/hodos/projections/jallure/src/main/groovy/io/github/forcasic/jmeter/allure/AllureResultBuilder.groovy": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "7f713db3450066125644c84d90996b24",
+    "semantic_hash": "7f713db3450066125644c84d90996b24"
+  },
+  "/home/hodos/projections/jallure/src/main/groovy/io/github/forcasic/jmeter/allure/AttachmentWriter.groovy": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "bffee3e98e21dae87d4c9926442aceeb",
+    "semantic_hash": "bffee3e98e21dae87d4c9926442aceeb"
+  },
+  "/home/hodos/projections/jallure/src/main/groovy/io/github/forcasic/jmeter/allure/JMeterContext.groovy": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "3bab1e42e27ced4fef034eb2fc5dcabb",
+    "semantic_hash": "3bab1e42e27ced4fef034eb2fc5dcabb"
+  },
+  "/home/hodos/projections/jallure/src/main/groovy/io/github/forcasic/jmeter/allure/JsonUtils.groovy": {
+    "mtime": 1783415853.4910324,
+    "ast_hash": "07d4c9ccca2a42c2ad57c140e4583133",
+    "semantic_hash": "07d4c9ccca2a42c2ad57c140e4583133"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureEpicLeakRegressionSpec.groovy": {
+    "mtime": 1783415853.4920323,
+    "ast_hash": "d4339f4ed386a762d9fc6a0e889310d9",
+    "semantic_hash": "d4339f4ed386a762d9fc6a0e889310d9"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureReporterEdgeCaseTest.groovy": {
+    "mtime": 1783451314.2646604,
+    "ast_hash": "ac1cde89e10bd78586c54bab8d9b8e8f",
+    "semantic_hash": "ac1cde89e10bd78586c54bab8d9b8e8f"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureResultBuilderSpec.groovy": {
+    "mtime": 1783415853.4920323,
+    "ast_hash": "dc95139b9d4bcb36ef8e1b97c6b130a4",
+    "semantic_hash": "dc95139b9d4bcb36ef8e1b97c6b130a4"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureResultValidator.groovy": {
+    "mtime": 1783415853.4920323,
+    "ast_hash": "f9c98988d720f40d5ffad1e2720c6af0",
+    "semantic_hash": "f9c98988d720f40d5ffad1e2720c6af0"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureResultValidatorSpec.groovy": {
+    "mtime": 1783415853.4920323,
+    "ast_hash": "4cf440ab9a2fb3550efab79e4ea069de",
+    "semantic_hash": "4cf440ab9a2fb3550efab79e4ea069de"
+  },
+  "/home/hodos/projections/jallure/src/test/groovy/io/github/forcasic/jmeter/allure/AllureResultsSpec.groovy": {
+    "mtime": 1783415853.4920323,
+    "ast_hash": "6403065c33529766dcdc6f2145dee449",
+    "semantic_hash": "6403065c33529766dcdc6f2145dee449"
+  },
+  "/home/hodos/projections/jallure/src/test/resources/expected_results.json": {
+    "mtime": 1783415853.4950318,
+    "ast_hash": "36cbe266727409dab72e778338aab1d1",
+    "semantic_hash": "36cbe266727409dab72e778338aab1d1"
+  },
+  "/home/hodos/projections/jallure/src/test/resources/expected_results_based_on_jmx.json": {
+    "mtime": 1783415853.4950318,
+    "ast_hash": "f40444a78d6a5eca3d98d49f3998d905",
+    "semantic_hash": "f40444a78d6a5eca3d98d49f3998d905"
+  },
+  "/home/hodos/projections/jallure/README.md": {
+    "mtime": 1783415853.488033,
+    "ast_hash": "b07b08aefc2ee128cd9271203e20a7c8",
+    "semantic_hash": "b07b08aefc2ee128cd9271203e20a7c8"
+  },
+  "/home/hodos/projections/jallure/docker/docker-compose.yml": {
+    "mtime": 1783415853.4890327,
+    "ast_hash": "f72a29d25e5f9c6d1a4aec40c274dc2e",
+    "semantic_hash": "f72a29d25e5f9c6d1a4aec40c274dc2e"
+  },
+  "/home/hodos/projections/jallure/docs/jallure_usage.md": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "33fbeca253bec0ea63008198174c0222",
+    "semantic_hash": "33fbeca253bec0ea63008198174c0222"
+  },
+  "/home/hodos/projections/jallure/docs/project_structure.md": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "31772e6d306809ab9088d8e0a569828a",
+    "semantic_hash": "31772e6d306809ab9088d8e0a569828a"
+  },
+  "/home/hodos/projections/jallure/docs/test_composition_guide.md": {
+    "mtime": 1783415853.4900327,
+    "ast_hash": "8f710e6d4122c5690d832579597e56ab",
+    "semantic_hash": "8f710e6d4122c5690d832579597e56ab"
+  }
+}

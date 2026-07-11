@@ -1,0 +1,1 @@
+{"nodes": [{"id": "allure_attachmentwriter", "label": "AttachmentWriter.groovy", "file_type": "code", "source_file": "src/main/groovy/io/github/forcasic/jmeter/allure/AttachmentWriter.groovy", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "File I/O for Allure attachments."}], "edges": [], "hyperedges": []}

@@ -1,0 +1,1 @@
+{"nodes": [{"id": "allure_allurereporter", "label": "AllureReporter.groovy", "file_type": "code", "source_file": "src/main/groovy/io/github/forcasic/jmeter/allure/AllureReporter.groovy", "source_location": null, "source_url": null, "captured_at": null, "author": null, "contributor": null, "rationale": "Main reporter logic."}], "edges": [], "hyperedges": []}
